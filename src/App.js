@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import "./Styles/main.scss";
+
+import Home from './Components/Home/Home.jsx';
+import Navigation from './Components/Navigation/Navigation.jsx';
+import Authentication from './Components/Pages/Authentication';
+import Login from './Components/Pages/Login';
+import Signup from './Components/Pages/Signup';
 
 function App() {
+  const [userLoginStatus, setUserLoginStatus] = useState("NOT_LOGGED_IN");
+  const [username, setUsername] = useState("");
+  const [adminLoginStatus, setAdminLoginStatus] = useState("NOT_LOGGED_IN");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Navigation userLoginStatus={userLoginStatus} setUserLoginStatus={setUserLoginStatus} username={username} setUsername={setUsername} adminLoginStatus={adminLoginStatus} setAdminLoginStatus={setAdminLoginStatus}/>
+
+        <Routes>
+          <Route exact path="/" element={<Home/>}/>
+          <Route path="/auth" element={<Authentication userLoginStatus={userLoginStatus} setUserLoginStatus={setUserLoginStatus} username={username} setUsername={setUsername} adminLoginStatus={adminLoginStatus} setAdminLoginStatus={setAdminLoginStatus}/>}/>
+          <Route path="/auth/signup" element={<Signup userLoginStatus={userLoginStatus} setUserLoginStatus={setUserLoginStatus} username={username} setUsername={setUsername} adminLoginStatus={adminLoginStatus} setAdminLoginStatus={setAdminLoginStatus}/>}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
